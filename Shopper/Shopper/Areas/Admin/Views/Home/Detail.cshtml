@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using Shopper.Areas.Admin.Models;
+@model OrderModelDetail
+
+@section header{
+    Chi tiết đơn hàng
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <a class="btn btn-default btn-sm" href="/Admin/Home/Index"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+            </div>
+
+            <div class="panel-body">
+
+                <div class="box-body form-horizontal form-detail">
+                    <div class="form-group">
+                        <label class="col-sm-3 label-control">Tên khách hàng:</label>
+                        <div class="col-sm-9">
+                            @Model.order.ShipName
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 label-control">Email:</label>
+                        <div class="col-sm-9">
+                            @Model.order.ShipEmail
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 label-control">Địa chỉ giao hàng:</label>
+                        <div class="col-sm-9">
+                            @Model.order.ShipAddress
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 label-control">Điện thoại liên lạc:</label>
+                        <div class="col-sm-9">
+                            @Model.order.ShipMobile
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3">Tài khoản:</label>
+                        <div class="col-sm-9">
+                            @Model.userName
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Ngày Đặt :</label>
+                        <div class="col-sm-3">
+                            @Model.order.CreateDate.Value.ToString("dd-MM-yyy")
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Trị giá:</label>
+                        <div class="col-sm-9 red">
+                            @Model.total
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">Tình trạng:</label>
+                        <div class="col-sm-9 red">
+                            @(Model.order.Status > 0 ? "Đã giao xong" : "Chưa giao hàng")
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-12">Danh sách sản phẩm</label>
+                    </div>
+                    <div class="form-group">
+                        <table class="table products table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">
+                                        STT
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Mã
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Tên Sản phẩm
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Số lượng
+                                    </th>
+                                    <th style="text-align:center;">
+                                        Đơn giá
+                                    </th>
+
+                                    <th style="text-align:center;">
+                                        Thành tiền
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{var index = 1;}
+                                @foreach (var detail in Model.lstDetail)
+                                {
+
+                                    <tr>
+                                        <td style="text-align:center;">@index</td>
+                                        <td style="text-align:center;">@detail.code</td>
+                                        <td style="text-align:center;">@detail.productName</td>
+                                        <td style="text-align:center;">@(detail.orderDetail.Quantity) </td>
+                                        <td style="text-align:center;">@(detail.orderDetail.Price.Value.ToString("N0")) </td>
+                                        <td style="text-align:center;">@((detail.orderDetail.Price * detail.orderDetail.Quantity).Value.ToString("N0"))</td>
+                                    </tr>
+                                    index++;
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel-footer">
+                <a class="btn btn-default btn-sm" href="/Admin/Home/Index"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+                <a class="btn btn-success btn-sm" href="/Admin/Home/Success?id=@Model.order.ID"><i class="fa fa-pencil"></i>&nbsp;Thanh toán xong</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+

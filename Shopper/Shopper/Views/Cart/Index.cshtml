@@ -1,0 +1,55 @@
+﻿@model List<Shopper.Models.ViewDetailModel.CartItem>
+@{
+    ViewBag.Title = "Thông tin giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section jsFooter{
+    <script src="~/AssetsClient/js/Controller/Cart.js"></script>
+}
+<div class="content">
+    <div class="section group">
+        <div class="row">
+            <div class="panel-danger">
+                <div class="panel-body">
+                    @if (Model.Count > 0)
+                    {
+                        <table class="table table-striped table-bordered table-hover dataTable">
+                            <thead>
+                                <tr>
+                                    <td style="text-align:center;">Tên Sản Phẩm</td>
+                                    <td style="text-align:center;">Ảnh Sản Phẩm</td>
+                                    <td style="text-align:center;">Số Lượng Mua</td>
+                                    <td style="text-align:center;">Giá Bán</td>
+                                    <td style="text-align:center;">Thành Tiền</td>
+                                    <td style="text-align:center;">Xóa</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td style="text-align:center;">@item.product.Name</td>
+                                        <td style="text-align:center;"><img src="@item.product.Image" style="width:100px;" /></td>
+                                        <td style="text-align:center;"><input type="number" min="1" class="txtQuantity" data-id="@item.product.ID" value="@item.quantity" required /></td>
+                                        <td style="text-align:center;">@(item.product.PromotionPrice.Value > 0 ? item.product.PromotionPrice.Value.ToString("N0") : item.product.Price.GetValueOrDefault(0).ToString("N0"))</td>
+                                        <td style="text-align:center;">@(item.product.PromotionPrice > 0 ? (item.product.PromotionPrice * item.quantity).Value.ToString("N0") : (item.product.Price * item.quantity).Value.ToString("N0"))</td>
+                                        <td style="text-align:center;">
+                                            <a href="#" data-id="@item.product.ID" class="deleteCartItem"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <button id="btnBack" class="btn btn-primary">Mua sắm tiếp</button>
+                        <button id="btnDeleteAll" class="btn btn-primary">Xóa tất cả</button>
+                        <button id="btnContinue" class="btn btn-primary">Xác Nhận</button>
+                    }
+                    else
+                    {
+                        <p>Chưa có sản phẩm nào</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

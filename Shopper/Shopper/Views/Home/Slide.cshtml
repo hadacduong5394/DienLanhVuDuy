@@ -1,0 +1,11 @@
+﻿@model List<Shopper.Models.EF.Slide>
+
+
+
+<div id="slider" class="nivoSlider">
+    @foreach (var item in Model)
+    {
+        <img src="@item.Image" alt="@item.ID" title="@item.Description" data-thumb="images/up.jpg" />
+    }
+</div>
+

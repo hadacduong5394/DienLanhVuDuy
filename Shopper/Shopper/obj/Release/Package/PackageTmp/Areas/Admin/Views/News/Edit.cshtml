@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "sửa đổi tin tức";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Shopper.Models.EF.Content
+@using Shopper.Models.EF;
+@section header{
+    Sửa Đổi Tin tức
+}
+@section footerJS{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script>
+        $('form:first').validate();
+        $('.error').css('color', 'red');
+        $('#btnAddImage').on('click', function (e) {
+            e.preventDefault();
+            var ck = new CKFinder();
+            ck.selectActionFunction = function (url) {
+                $('#Image').val(url)
+            };
+            ck.popup();
+        })
+
+        var editer = CKEDITOR.replace('txt', {
+            customConfig: "/Areas/Admin/Assets/ckeditor/config.js"
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="/Admin/News/Index" class="btn btn-default btn-sm mr-15"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Edit", "News", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    @Html.HiddenFor(Model => Model.ID)
+                    <div class="form-group">
+                        <label>Tên bài viết</label>
+                        @Html.TextBoxFor(Model => Model.Name, new { @class = "required form-control", title = "nhập tên bài viết", maxlength = "250" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mô tả chung</label>
+                        @Html.TextAreaFor(Model => Model.Description, new { @class = "required form-control", title = "nhập tên mô tả chung", maxlength = "500" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ảnh bài viết</label>
+                        @Html.TextBoxFor(Model => Model.Image, new { @class = "required form-control", title = "nhập ảnh bài viết" })
+                        <a href="#" class="btn btn-link" id="btnAddImage">Thêm Ảnh</a>
+                    </div>
+                    <div class="form-group">
+                        <label>Nội Dung</label>
+                        @Html.TextAreaFor(Model => Model.Detail, new { @class = "required form-control", id = "txt", title = "nhập ảnh thông tin chi tiết bài viết" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Danh mục</label>
+                        @Html.DropDownListFor(Model => Model.CatagoryID, null, new { @class = "required form-control", title = "chọn danh mục" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        @Html.DropDownListFor(Model => Model.Status, null, new { @class = "form-control" })
+                    </div>
+
+                    <input type="submit" value="Lưu thay đổi" class="btn btn-primary btn-lg btn-block" />
+                }
+            </div>
+            <div class="panel-footer">
+                <a href="/Admin/News/Index" class="btn btn-default btn-sm mr-15"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

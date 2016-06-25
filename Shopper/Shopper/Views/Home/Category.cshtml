@@ -1,0 +1,11 @@
+﻿@model List<Shopper.Models.EF.ProductCategory>
+
+
+<ul>
+    <h3>Danh Mục Sản Phẩm</h3>
+    @foreach (var item in Model)
+    {
+        <li><a href="/san-pham/@item.MetaTitile-@item.ID">@item.Name</a></li>
+    }
+</ul>
+

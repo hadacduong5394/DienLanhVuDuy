@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "sửa đổi tin tức";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model Shopper.Models.EF.About
+@using Shopper.Models.EF;
+@section header{
+    Sửa Đổi Thông Tin
+}
+@section footerJS{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script>
+        $('form:first').validate();
+        $('.error').css('color', 'red');
+        //$('#btnAddImage').on('click', function (e) {
+        //    e.preventDefault();
+        //    var ck = new CKFinder();
+        //    ck.selectActionFunction = function (url) {
+        //        $('#Image').val(url)
+        //    };
+        //    ck.popup();
+        //})
+
+        var editer = CKEDITOR.replace('txt', {
+            customConfig: "/Areas/Admin/Assets/ckeditor/config.js"
+        });
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <a href="/Admin/About/Index" class="btn btn-default btn-sm mr-15"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+            </div>
+            <div class="panel-body">
+
+                @using (Html.BeginForm("Edit", "About", FormMethod.Post))
+                {
+                    @Html.Hidden("ID", Model.ID)
+                    <div class="form-group">
+                        <label>Tên bài viết</label>
+                        @Html.TextBox("Name", Model.Name, new { @class = "required form-control", title = "nhập tên bài viết", maxlength = "250" })
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mô tả chung</label>
+                        @Html.TextArea("Description", Model.Description, new { @class = "form-control", title = "nhập tên mô tả chung", maxlength = "500" })
+                    </div>
+                    <div class="form-group">
+                        <label>Nội Dung</label>
+                        @Html.TextArea("Detail", Model.Detail, new { @class = "required form-control", id = "txt", title = "thông tin chi tiết bài viết" })
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Trạng thái</label>
+                        @Html.CheckBox("Status", Model.Status)
+                    </div>
+
+                    <input type="submit" value="Lưu thay đổi" class="btn btn-primary btn-lg btn-block" />
+                }
+
+            </div>
+            <div class="panel-footer">
+                <a href="/Admin/About/Index" class="btn btn-default btn-sm mr-15"><i class="fa fa-backward"></i>&nbsp;Quay lại</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

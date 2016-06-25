@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@using PagedList.Mvc
+@model PagedList.IPagedList<Shopper.Models.EF.FeedBack>
+
+@section header{
+    Phản Hồi Khách Hàng
+}
+
+@section footerJS{
+    <script src="~/Scripts/jquery-ui-1.11.4.min.js"></script>
+<script src="~/Areas/Admin/Assets/js/controller/Feedback.js"></script>
+}
+
+<div class="dataTable_wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            @using (Html.BeginForm("Index", "FeedBack", FormMethod.Get))
+            {
+                <div class="input-group custom-search-form">
+                    <input type="text" class="form-control" value="@ViewBag.SearchString" placeholder="tên khách hàng" name="searchString">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            }
+            <hr />
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <tr>
+                    <th style="text-align:center;">Nội Dung</th>
+                    <th style="text-align:center;">Ngày Đăng</th>
+                    <th style="text-align:center;">Trạng Thái</th>
+                    <th style="text-align:center;">Chi Tiết</th>
+                    <th style="text-align:center;">Trả Lời</th>
+                    <th style="text-align:center;">Xóa</th>
+                </tr>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr id="row_@item.ID">
+                            <td style="text-align:center;">@Html.Raw(item.Content)</td>
+                            <td style="text-align:center;">@(item.CreatedDate.Value.ToString("dd-MM-yyyy"))</td>
+                            <td style="text-align:center;">
+                                @if ((bool)item.Status)
+                                { <i class="glyphicon glyphicon-ok"></i> }
+                                else
+                                { <i class="glyphicon glyphicon-remove"></i> }
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="#" class="ViewDetail" data-id="@item.ID"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="/Admin/FeedBack/RequestFeedback?id=@item.ID"><i class="glyphicon glyphicon-envelope"></i></a>
+                            </td>
+                            <td style="text-align:center;">
+                                <a href="#" data-href="/Admin/FeedBack/Delete?id=@item.ID" data-toggle="modal" data-target="#confirm-delete"><i class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div id="Page">
+                @Html.PagedListPager(Model, page => Url.Action("Index", "FeedBack", new { page, searchString = @ViewBag.SearchString }))
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal modal-default" id="ViewDetail">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4><i class="fa fa-eye"></i> thông tin chi tiết</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+
+                <div class="form-group">
+                    <div class="col-sm-3"><span>Tên khách hàng :</span></div>
+                    <p class="col-sm-9 lbName"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"><span>Điện thoại :</span></div>
+                    <p class="col-sm-9 lbPhone"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3"><span>Email :</span></div>
+                    <p class="col-sm-9 lbEmail"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">Ngày Đăng:</div>
+                    <p class="col-sm-9 lbCreateDate"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">Nội dung:</div>
+                    <p class="col-sm-9 lbContent"></p>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-3">Trang thái:</div>
+                    <p class="col-sm-9 lbStatus"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="pull-right btn btn-danger"><i class="fa fa-close"></i>Đóng</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label>CẢNH BÁO</label>
+            </div>
+            <div class="modal-body">
+                <p>Xóa dữ liệu này có thể xóa đi các dữ liệu có liên quan</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+﻿@model List<Shopper.Models.EF.Menu>
+
+<div class="call">
+    @foreach (var item in Model)
+    {
+        <p><span>Cần Giúp Đỡ?</span> liên hệ <span class="number"><a href="@item.Link" target="@item.Target">@item.Text</a></span></p>
+    }
+</div>

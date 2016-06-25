@@ -1,0 +1,92 @@
+﻿@model Shopper.Models.ViewDetailModel.RegisterModel
+@using BotDetect.Web.Mvc;
+<link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl"
+      rel="stylesheet" type="text/css" />
+@{ MvcCaptcha registerCapcha = new MvcCaptcha("registerCapcha"); }
+@{
+    ViewBag.Title = "Đăng kí thành viên";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Đăng Kí Thành Viên</h3>
+                </div>
+                <div class="panel-body">
+
+                    @using (Html.BeginForm("CreateNew", "User", FormMethod.Post))
+                    {
+                        <fieldset>
+                            @Html.AntiForgeryToken()
+                            <div class="form-control-danger">
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.userName)
+                                @Html.TextBoxFor(model => model.userName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.userName, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.password)
+                                @Html.PasswordFor(model => model.password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.password, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.confirmPassword)
+                                @Html.PasswordFor(model => model.confirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.confirmPassword, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.name)
+                                @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.name, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.phoneNumber)
+                                @Html.TextBoxFor(model => model.phoneNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.email)
+                                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.email, "", new { @style = "color:red;" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.address)
+                                @Html.TextBoxFor(model => model.address, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.address, "", new { @style = "color:red;" })
+                            </div>
+                            <div class="form-group">
+                                <label>Mã xác nhận</label>
+                                @Html.Captcha(registerCapcha)
+                                @Html.TextBox("CaptchaCode")
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Đăng kí" class="btn btn-lg btn-success btn-block" />
+                            </div>
+                        </fieldset>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+
+            </div>
+        </div>
+    </div>
+</div>

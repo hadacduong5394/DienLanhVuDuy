@@ -1,0 +1,40 @@
+﻿@model Shopper.Models.EF.Footer
+
+@{
+    ViewBag.Title = "FooterUpdate";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Sửa Thông Tin
+}
+@section footerJS{
+    <script>
+
+        var editer = CKEDITOR.replace('txt', {
+            customConfig: "/Areas/Admin/Assets/ckeditor/config.js"
+        });
+
+    </script>
+}
+<div class="row">
+    <div class="col-lg-12">
+        @using (Html.BeginForm("FooterUpdate", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                <label>Nội Dung</label>
+                @Html.TextAreaFor(Model => Model.content, new { @class = "form-control", id = "txt" })
+            </div>
+            <input type="submit" value="Cập Nhật" class="btn btn-primary btn-lg" />
+        }
+
+        <div>
+            @Html.ActionLink("Quay Lại", "FooterManager", "Home")
+        </div>
+    </div>
+</div>
+

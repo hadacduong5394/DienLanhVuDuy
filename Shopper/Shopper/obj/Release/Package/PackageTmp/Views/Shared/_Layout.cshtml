@@ -1,0 +1,114 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/Scripts/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Scripts/bootstrap-3.3.6-dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/AssetsClient/css/jquery-ui.css" rel="stylesheet" />
+    <link href="~/AssetsClient/nivo-slider/themes/default/default.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="~/AssetsClient/nivo-slider/nivo-slider.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="~/AssetsClient/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/AssetsClient/css/slider.css" rel="stylesheet" type="text/css" media="all" />
+    @*@Styles.Render("~/bundles/css");*@
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/AssetsClient/nivo-slider/jquery.nivo.slider.js"></script>
+    <script src="~/Scripts/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script type="~/AssetsClient/text/javascript" src="~/AssetsClient/js/move-top.js"></script>
+    <script type="~/AssetsClient/text/javascript" src="~/AssetsClient/js/easing.js"></script>
+    <script type="~/AssetsClient/text/javascript" src="~/AssetsClient/js/startstop-slider.js"></script>
+    @*@Scripts.Render("~/bundles/js");*@
+    <script type="text/javascript">
+        $(window).load(function () {
+            $('#slider').nivoSlider();
+        });
+    </script>
+</head>
+<body>
+    @if (TempData["AlertMessage"] != null)
+    {
+        <div id="AlertBox" class="alert @TempData["AlertType"] hide" style="text-align:center;">
+            @TempData["AlertMessage"]
+        </div>
+    }
+    <style>
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: small;
+            color: green;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+        }
+        /* IE 6 doesn't support max-height
+        * we use height instead, but this forces the menu to always be this tall
+        */
+        * html .ui-autocomplete {
+            height: 200px;
+        }
+    </style>
+
+    <div class="wrap">
+        <div class="header">
+            <div class="headertop_desc">
+                @{Html.RenderAction("ContactHelp", "Home");}
+                <div class="clear"></div>
+                @{Html.RenderAction("MenuTop", "Home");}
+                <div class="clear"></div>
+            </div>
+
+
+            <div class="header_top">
+                <div class="logo">
+                    <a href="/Trang-chu"><h1><span class="account_desc">ĐIỆN LẠNH VŨ DUY</span></h1></a>
+                </div>
+                @{Html.RenderAction("Total", "Cart");}
+
+                <div class="clear"></div>
+            </div>
+            <div class="header_bottom">
+                @{Html.RenderAction("MainMenu", "Home");}
+                <div class="search_box">
+                    <form action="/tim-kiem" method="get">
+                        <input type="text" id="txtKeyword" name="keyword" placeholder="tên sản phẩm"><input type="submit" value="">
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+            @RenderSection("Slider", false)
+        </div>
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="footer">
+        <div class="wrap">
+            <div class="section group">
+                @{Html.RenderAction("FooterFirst", "Home");}
+
+                @{Html.RenderAction("FooterSecond", "Home");}
+
+                @{Html.RenderAction("FooterThird", "Home");}
+
+                @{Html.RenderAction("FooterFourth", "Home");}
+            </div>
+        </div>
+        <div class="copy_right">
+            <p>- Design and coding by  <a href="https://www.facebook.com/hadacduong">HÀ ĐẮC DƯƠNG -</a> </p>
+        </div>
+    </div>
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+    <script src="~/AssetsClient/js/Controller/baseController.js"></script>
+    <script src="~/AssetsClient/js/Controller/AlertInfo.js"></script>
+    @*@Scripts.Render("~/bundles/CustumJS");*@
+    @RenderSection("jsFooter", false)
+</body>
+</html>
+
+

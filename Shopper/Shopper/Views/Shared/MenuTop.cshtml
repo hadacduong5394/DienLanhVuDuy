@@ -1,0 +1,28 @@
+﻿@model List<Shopper.Models.EF.Menu>
+@using Shopper.Common;
+@using Shopper.Models.ViewDetailModel;
+@{
+
+    var user = Session[Shopper.Common.Constans.SESSION_LOGIN_USER] as UserSession;
+    if (user != null)
+    {
+        <div class="account_desc">
+            <ul>
+                <li><a href="/thong-tin-nguoi-dung/@user.UserName">@user.UserName</a></li>
+                <li><a href="/doi-mat-khau">Đổi mật khẩu</a></li>
+                <li><a href="/Logout/Logout">đăng xuất <i class="fa fa-sign-out"></i></a></li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="account_desc">
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li><a href="@item.Link" target="@item.Target">@item.Text <i class="fa fa-sign-in"></i></a></li>
+                }
+            </ul>
+        </div>
+    }
+}

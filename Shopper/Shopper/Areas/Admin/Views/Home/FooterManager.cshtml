@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "FooterManager";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@model List<Shopper.Models.EF.Footer>
+@section header{
+    Danh Sách Người Dùng
+}
+<div class="dataTable_wrapper">
+    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+
+        <tr>
+            <th style="text-align:center;">Cột Thứ</th>
+            <th style="text-align:center;">Nội Dung</th>
+            <th style="text-align:center;">Cập nhật</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center;">@item.ID</td>
+                    <td style="text-align:center;">@Html.Raw(item.content)</td>
+                    <td style="text-align:center;"><a href="@Url.Action("FooterUpdate", "Home", new { footerID = item.ID })"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+            }
+        </tbody>
+
+
+    </table>
+</div>

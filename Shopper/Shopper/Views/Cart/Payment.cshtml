@@ -1,0 +1,63 @@
+﻿@model Shopper.Models.EF.Order
+
+@{
+    ViewBag.Title = "thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class=" panel panel-primary">
+            <div class="panel-heading">
+                <h1>Thông tin người nhận hàng</h1>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { style = "color:red;" })
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShipName)
+                            @Html.TextBoxFor(model => model.ShipName, new { @class = "form-control" })
+                            <p class="help-block" style="color:red;">@Html.ValidationMessageFor(model => model.ShipName)</p>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShipMobile)
+                            @Html.TextBoxFor(model => model.ShipMobile, new { @class = "form-control" })
+                            <p class="help-block" style="color:red;">@Html.ValidationMessageFor(model => model.ShipMobile)</p>
+
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ShipAddress)
+                            @Html.TextBoxFor(model => model.ShipAddress, new { @class = "form-control", placeholder="Ghi rõ số nhà, tổ dân phố(xã, thông...), phường, quận(huyện), thành phố" })
+                            <p class="help-block" style="color:red;">@Html.ValidationMessageFor(model => model.ShipAddress)</p>
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.ShipEmail)
+                            @Html.TextBoxFor(model => model.ShipEmail, new { @class = "form-control" })
+                            <p class="help-block" style="color:red;">@Html.ValidationMessageFor(model => model.ShipEmail)</p>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Thanh Toán</button>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
